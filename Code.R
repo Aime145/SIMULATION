@@ -115,7 +115,10 @@ unique(base$lib_risque_jo)
 ##quanti-quali 
 
 #val_fonc x commune
-#val_fonc x type local 
+#val_fonc x type local
+
+### ce sont juste des tests
+
 
 
 
