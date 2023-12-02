@@ -21,4 +21,4 @@ Base_Val$`Code commune`[which(p1)]<-str_c(Base_Val$`Code departement`[p1],Q2[p1]
 
 
 
-as.data.frame(Base_Val)
+as.data.frame(Base_Val+ 17)
