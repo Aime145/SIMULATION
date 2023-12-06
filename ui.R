@@ -46,7 +46,7 @@ library(leaflet)
 library(rnaturalearth)
 library(mapview)
 library(tmap)
-
+library(DT)
 library(shiny)
 library(rnaturalearth)
 
@@ -156,8 +156,8 @@ ui <- dashboardPage(
                                                           "-	Nous avons remarqué qu’il y avait des différences d’encodages au niveau des libellés des catnat (secheresse  sécheresse) ce qui entraine des valeurs manquantes (car les catnat mal écrites n’avaient pas 
                                                             de numéro de risque), et des occurrences de catnat bien encodés mais ne possédant pas de numéro de risque. Il a donc fallu réattribuer les bons numéros de risque et identifier les catnat par leur numéro de risque plutôt que les libellés.",
                                                           br(),hr(), 
-                                                          "-	Pour terminer, nous avons décidé de restreindre l’étude aux 4 catnat les plus présentes dans notre base, représentant à elles seules 92,38% des données. Il s’agit des inondations et/ou coulées de boue, des mouvements de terrain, 
-                                                          des sécheresses et des tempêtes.",
+                                                          "-	Pour terminer, nous avons décidé de restreindre l’étude aux 3 catnat les plus présentes dans notre base, représentant à elles seules 86% des données. Il s’agit des inondations et/ou coulées de boue, des mouvements de terrain et 
+                                                          des sécheresses.",
                                                            width = 12 )),
                                                        
                                                        column(6,
@@ -186,24 +186,190 @@ ui <- dashboardPage(
                                           tabPanel(h5(strong("Titre 1")), ### iCI C'EST POUR LA CARTE DE FRANCE (INPUT)
                                                                    
                                                                    fluidRow(
-                                                                     column(6,box(title = "Carte de france",tmapOutput("mymap"),width=12)),
+                                                                     column(6,box(title = "Carte de france",
+                                                                                  tmapOutput("mymap"), width=12)),
                                                                      
                                                                      column(6, 
                                                                             box(
                                                                               title = "Controls",
-                                                                              sliderInput("slider", "Number of observations:", 1981, 2023, "",animate = T, sep = ""),width=12
-                                                                            ) ,  radioButtons("Choix", label = "",choices = list("Inondation" = 1, "Seisme" = 2), 
+                                                                              sliderInput("slider", "Number of observations:", 1981, 2022, "",animate = T, sep = ""),width=12
+                                                                            ) ,  radioButtons("Choix", label = "",choices = list("Inondation" = 1, "Secheresse" = 2, "Mouvement de terrain" = 3
+                                                                                                                                 ), 
                                                                                                                          selected = 1)
                                                                             
                                                                             
                                                                             
                                                                      )
-                                                                   ) )
+                                                                   )
+                                                     
+                                                   ),
+                                          
+                                          
+                                          tabPanel(h5(strong("Generalité")) ,hr(),
+                                                   
+                                                   fluidRow(
+                                                     
+                                                     column(8, 
+                                                            
+                                                            box(img(src="https://raw.githubusercontent.com/Aime145/SIMULATION/main/Point.png",height="320px"),width = 12 )
+                                                            , 
+                                                            selected = 1 ),
+                                                     column(4, box("Intepretations", width = 12))
+                                                     
+                                                     
+                                                     
+                                                     
+                                                     
+                                                     
+                                                   ),
+                                                   fluidRow(
+                                                     column(8,
+                                                            box(plotlyOutput("Alpho"), width = 12 )),
+                                                     column(4,box("Intepretation", width=12))
+                                                     
+                                                   )
+                                                   
+                                                   
+                                                   
+                                                   
+                                                   
+                                          ),
+                                          
+                                          tabPanel(h5(strong("Facteurs d'anticipation CatNat")) ,hr(),
+                                                   
+                                                   fluidRow(
+                                                     
+                                                     column(8, 
+                                                            
+                                                            plotOutput("sinistrePlot")
+                                                            , 
+                                                            selected = 1 ),
+                                                     
+                                                     column(4, box(radioButtons("Risque", "Choisir un risque:", choices = c("Inondation","Secheresse","Mouvement de terrain"), selected = NULL),
+                                                                   selectInput("Code.departement", "Choisir un département:", choices = NULL), width = 12))
+                                                     
+                                                     
+                                                     
+                                                     
+                                                     
+                                                     
+                                                   ),
+                                                   fluidRow(
+                                                     column(8,
+                                                            box(plotlyOutput("Alpho"), width = 12 )),
+                                                     column(4,box("Intepretation", width=12))
+                                                     
+                                                   )
+                                                   
+                                                   
+                                                   
+                                                   
+                                                   
+                                          )
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                                   
+                                                   
+                                                   
+                                                   
+                                                   
+                                                   
+                                                   
+                                                   
+                                                   
+                                                   )
                                    )
                                    )
                             )
+                        
+                        
+                        
+                        
+                        
+                        , tabItem(
+                          tabName = "tp5",
+                          em(span(h2("Sous titre Data"),style="color:blue")),hr(),hr(),
+                          fluidRow(
+                            
+                            column(12,
+                                   DTOutput("data1") 
+                            )
+                            
+                          ),
+                          fluidRow(
+                            
+                            column(12,
+                                   DTOutput("data2") 
+                            )
+                            
+                          ),
+                          fluidRow(
+                            
+                            column(12,
+                                   DTOutput("data3") 
+                            )
+                            
+                          ),
+                          fluidRow(
+                            
+                            column(12,
+                                   DTOutput("data4") 
+                            )
+                            
+                          ),
+                          fluidRow(
+                            
+                            column(12,
+                                   DTOutput("data5") 
+                            )
+                            
+                          ),
+                          fluidRow(
+                            
+                            column(12,
+                                   DTOutput("data6") 
+                            )
+                            
+                          ),
+                          fluidRow(
+                            
+                            column(12,
+                                   DTOutput("data7") 
+                            )
+                            
                           )
-                        ) ),
+                          
+                          
+                        )
+                        
+                        
+                        
+                        
+                        
+                        
+                          )
+                        
+                        
+                      
+                      
+                      
+                      
+                      
+                        
+                      
+                        
+                        
+                        
+                        
+                        
+                        ),
   
   
 
